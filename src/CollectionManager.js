@@ -28,7 +28,8 @@ CollectionManager.prototype.findRange = function () {
 
 	try {
 		var rangeStartingAddress = this.parseAddress(rangeStartingAddressString, startingAddressString);
-		var rangeEndingAddress = this.parseAddress(rangeEndingAddressString, startingAddressString);
+		var rangeEndingAddress = this.parseAddress(rangeEndingAddressString, rangeStartingAddressString);
+
 		if(rangeStartingAddress.collection != rangeEndingAddress.collection)
 			callbackCursor(new CalculatorError('collection_mismatch', "Collections for start and end of range do not match"), null);
 		else if(typeof rangeStartingAddress.collection == 'undefined')
@@ -110,11 +111,11 @@ CollectionManager.prototype.findOne = function() {
 	}
 
 	function callbackCell(error, cell) {
+		if(error)
+			cell = {error: error};
+
 		var addressJoined = manager.joinAddress({collection: requestedAddress.collection, internal: requestedAddressInternal});
 		cell.address = addressJoined;
-
-		if(error)
-			cell.error = error;
 
 		callback(cell);
 	}

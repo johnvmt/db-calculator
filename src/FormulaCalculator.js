@@ -42,7 +42,6 @@ FormulaCalculator.prototype.calculate = function() {
 
 		traverseCallbacks.bottom = function(callback) {
 			// TODO fulfill cells?
-			//console.log("HIT BOTTOM");
 			callback();
 		};
 
